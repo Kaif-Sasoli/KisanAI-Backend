@@ -1,6 +1,4 @@
-import { User } from "../../generated/prisma/client";
 import { UserRole, AuthProvider } from "../../generated/prisma/client";
-
 
 export interface AuthenticatedUser {
     id: string;
@@ -17,3 +15,5 @@ declare global {
         }
     }
 }
+
+export { };
