@@ -1,0 +1,363 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ---------- Enums ----------------
+
+// Roles ENUM
+enum UserRole {
+  ADMIN
+  FARMER
+}
+
+enum AuthProvider {
+  EMAIL
+  GOOGLE
+}
+
+enum AreaUnit {
+  ACRE
+  HECTARE
+}
+
+enum Region {
+  CENTRAL
+  NORTH
+  EAST
+  WEST
+  SOUTH
+}
+
+enum SoilType {
+  SANDY
+  CLAY
+  LOAMY
+  SILTY
+  PEATY
+  CHALKY
+  OTHER
+}
+
+enum IrrigationType {
+  RAINFED
+  CANAL
+  TUBE_WELL
+  WELL
+  DRIP
+  SPRINKLER
+  OTHER
+}
+
+enum Season {
+  RABI
+  KHARIF
+  ZAID
+}
+
+enum CropStatus {
+  PLANNED
+  ACTIVE
+  HARVESTED
+  FAILED
+}
+
+enum CropType {
+  WHEAT
+  RICE
+  MAIZE
+  COTTON
+  SUGARCANE
+  POTATO
+}
+
+enum NotificationType {
+  WEATHER
+  RAIN
+  TEMPERATURE
+  WIND
+  HUMIDITY
+  CROP
+  SOIL_MOISTURE
+  SYSTEM
+}
+
+enum NotificationPriority {
+  LOW
+  NORMAL
+  HIGH
+}
+
+enum DevicePlatform {
+  ANDROID
+  IOS
+  WEB
+}
+
+//  -------------- Schemas --------------
+
+// User Schema
+model User {
+  id                   String          @id @default(uuid())
+  username             String?         @unique
+  fullName             String
+  email                String          @unique
+  password             String?
+  providerId           String?
+  providerType         AuthProvider    @default(EMAIL)
+  role                 UserRole        @default(FARMER)
+  phoneNumber          String?
+  profileImageUrl      String?
+  profileImagePublicId String?
+  isEmailVerified      Boolean         @default(false)
+  createdAt            DateTime        @default(now())
+  updatedAt            DateTime        @updatedAt
+  refreshTokens        RefreshToken[]
+  passwordResets       PasswordReset[]
+  farmer               Farmer?
+}
+
+// Farmer Schema
+model Farmer {
+  id                 String              @id @default(uuid())
+  userId             String              @unique
+  user               User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  preferredLanguage  String              @default("en")
+  province           String?
+  city               String?
+  district           String?
+  village            String?
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+  fields             Field[]
+  diseasePredictions DiseasePrediction[]
+  yieldPredictions   YieldPrediction[]
+  pushTokens         PushToken[]
+  notifications      Notification[]
+}
+
+// Field Schema
+model Field {
+  id             String          @id @default(uuid())
+  farmerId       String
+  farmer         Farmer          @relation(fields: [farmerId], references: [id], onDelete: Cascade)
+  name           String?
+  area           Float
+  areaUnit       AreaUnit        @default(ACRE)
+  latitude       Float?
+  longitude      Float?
+  province       String?
+  region         Region?
+  city           String?
+  village        String?
+  altitude       Float?
+  soilType       SoilType?
+  irrigationType IrrigationType?
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+
+  crops        Crop[]
+  soilDatas    SoilData[]
+  weatherDatas WeatherData[]
+
+  @@index([farmerId])
+}
+
+// Crop Schema
+model Crop {
+  id                  String              @id @default(uuid())
+  fieldId             String
+  field               Field               @relation(fields: [fieldId], references: [id], onDelete: Cascade)
+  cropName            CropType
+  season              Season
+  plantingDate        DateTime?
+  expectedHarvestDate DateTime?
+  actualHarvestDate   DateTime?
+  area                Float?
+  areaUnit            AreaUnit?
+  status              CropStatus          @default(ACTIVE)
+  createdAt           DateTime            @default(now())
+  updatedAt           DateTime            @updatedAt
+  yieldPredictions    YieldPrediction[]
+  diseasePredictions  DiseasePrediction[]
+
+  @@index([fieldId])
+}
+
+// Soil Schema
+model SoilData {
+  id            String   @id @default(uuid())
+  fieldId       String
+  field         Field    @relation(fields: [fieldId], references: [id], onDelete: Cascade)
+  nitrogen      Float?
+  phosphorus    Float?
+  potassium     Float?
+  soilPH        Float?
+  soilMoisture  Float?
+  organicCarbon Float?
+  recordedAt    DateTime @default(now())
+
+  @@index([fieldId])
+}
+
+// Weather Schema
+model WeatherData {
+  id              String   @id @default(uuid())
+  fieldId         String
+  field           Field    @relation(fields: [fieldId], references: [id], onDelete: Cascade)
+  temperature     Float?
+  humidity        Float?
+  rainfall        Float?
+  rainProbability Float?
+  windSpeed       Float?
+  weather         String?
+  recordedAt      DateTime
+  createdAt       DateTime @default(now())
+
+  @@index([fieldId])
+  @@index([recordedAt])
+}
+
+// Disease Prediction Schema
+model DiseasePrediction {
+  id             String   @id @default(uuid())
+  farmerId       String?
+  farmer         Farmer?  @relation(fields: [farmerId], references: [id], onDelete: Cascade)
+  cropId         String?
+  crop           Crop?    @relation(fields: [cropId], references: [id], onDelete: Cascade)
+  imageUrl       String
+  imagePublicId  String?
+  diseaseName    String
+  confidence     Float
+  treatment      Json
+  predictionDate DateTime @default(now())
+
+  @@index([cropId])
+  @@index([farmerId])
+}
+
+// Yield Prediction Schema
+model YieldPrediction {
+  id             String   @id @default(uuid())
+  cropId         String
+  crop           Crop     @relation(fields: [cropId], references: [id], onDelete: Cascade)
+  predictedYield Float
+  yieldUnit      String   @default("tons")
+  predictionDate DateTime @default(now())
+  inputData      Json?
+  createdAt      DateTime @default(now())
+  farmer         Farmer?  @relation(fields: [farmerId], references: [id])
+  farmerId       String?
+
+  @@index([cropId])
+  @@index([farmerId])
+}
+
+// Push Token or Device Taken
+model PushToken {
+  id        String         @id @default(uuid())
+  farmerId  String
+  farmer    Farmer         @relation(fields: [farmerId], references: [id], onDelete: Cascade)
+  token     String         @unique
+  platform  DevicePlatform @default(ANDROID)
+  isActive  Boolean        @default(true)
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+
+  @@index([farmerId])
+  @@index([isActive])
+}
+
+// Notification
+model Notification {
+  id        String               @id @default(uuid())
+  farmerId  String
+  farmer    Farmer               @relation(fields: [farmerId], references: [id], onDelete: Cascade)
+  type      NotificationType
+  priority  NotificationPriority @default(NORMAL)
+  title     String
+  message   String
+  data      Json?
+  city      String?
+  isRead    Boolean              @default(false)
+  isPushed  Boolean              @default(false)
+  dedupeKey String
+  createdAt DateTime             @default(now())
+
+  @@unique([farmerId, dedupeKey])
+  @@index([farmerId, createdAt])
+  @@index([isRead])
+}
+
+// Refresh Token  
+model RefreshToken {
+  id        String    @id @default(uuid())
+  token     String    @unique
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime?
+  isRevoked Boolean   @default(false)
+  createdAt DateTime  @default(now())
+}
+
+// EmailVerification
+model EmailVerification {
+  id        String   @id @default(uuid())
+  email     String
+  otpHash   String
+  expiresAt DateTime
+  verified  Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([email])
+}
+
+// Reset Password
+model PasswordReset {
+  id        String    @id @default(uuid())
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tokenHash String    @unique
+  expiresAt DateTime
+  usedAt    DateTime?
+  revokedAt DateTime?
+  createdAt DateTime  @default(now())
+
+  @@index([tokenHash])
+  @@index([userId])
+}
+
+// Settings
+model SystemSetting {
+  id          String   @id @default(uuid())
+  key         String   @unique
+  value       Json
+  description String?
+  category    String?
+  updatedAt   DateTime @updatedAt
+  createdAt   DateTime @default(now())
+}
+
+// Weather Cache
+model WeatherLocationCheck {
+  id            String    @id @default(uuid())
+  locationKey   String    @unique
+  city          String?
+  lastCheckedAt DateTime?
+  updatedAt     DateTime  @updatedAt
+
+  @@index([lastCheckedAt])
+}
+
+// Deployment 
+//Neon:  npx prisma migrate deploy
+//Local: npx prisma migrate dev --name some_change
