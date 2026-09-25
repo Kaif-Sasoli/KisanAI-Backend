@@ -8,12 +8,18 @@ export interface AuthenticatedUser {
     providerType: AuthProvider;
     profileImageUrl: string | null;
 }
-declare global {
-    namespace Express {
-        interface Request {
-            user?: AuthenticatedUser | null;
-        }
+// declare global {
+//     namespace Express {
+//         interface Request {
+//             user?: AuthenticatedUser | null;
+//         }
+//     }
+// }
+declare module "express-serve-static-core" {
+    interface Request {
+        user?: AuthenticatedUser | null;
     }
 }
+
 
 export { };
