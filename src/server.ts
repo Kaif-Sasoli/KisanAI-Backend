@@ -4,8 +4,8 @@ import cors from 'cors';
 import cookieParser from "cookie-parser"
 
 import { PORT } from './config/env.config.js';
-import { corsOptions } from './config/env.config.js';
-import { startNotificationJob } from "./jobs/weather-notification.job.js";
+// import { corsOptions } from './config/env.config.js';
+// import { startNotificationJob } from "./jobs/weather-notification.job.js";
 
 // Routes
 import authRouter from './routes/auth.routes.js'
@@ -31,7 +31,7 @@ app.use(helmet());
 app.use(express.json());
 app.use(cookieParser())
 app.use(express.urlencoded({ extended: true }));
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
 
 // Test
 app.get("/", (req, res) => {
@@ -42,15 +42,15 @@ app.get("/", (req, res) => {
 });
 
 // Test Cookies
-app.get("/test-cookies", (req, res) => {
-    console.log("Cookies received:", req.cookies);
-    return res.status(200).json({
-        success: true,
-        cookies: req.cookies,
-        accessTokenExists: !!req.cookies?.access_token,
-        refreshTokenExists: !!req.cookies?.refresh_token
-    });
-});
+// app.get("/test-cookies", (req, res) => {
+//     console.log("Cookies received:", req.cookies);
+//     return res.status(200).json({
+//         success: true,
+//         cookies: req.cookies,
+//         accessTokenExists: !!req.cookies?.access_token,
+//         refreshTokenExists: !!req.cookies?.refresh_token
+//     });
+// });
 
 
 // Check Health
@@ -65,27 +65,27 @@ app.get("/check-health", async (_, res) => {
 
 
 // Routes
-app.use("/auth", authRouter);
-app.use("/email", verfiyEmail);
-app.use("/field", fieldRoutes);
-app.use("/disease", predictDisease);
-app.use("/crops", cropRoutes);
-app.use("/soil-data", soilDataRoutes);
-app.use("/predict", predictRoutes);
-app.use("/yield", predictYieldRoutes);
-app.use("/farmer", farmerRoutes);
-app.use("/farmer/analytics", farmerAnalyticsRoutes);
-app.use("/admin", adminRoutes);
-app.use("/admin/analytics", adminAnalyticsRoutes);
-app.use("/admin/management", adminManagementController);
-app.use("/notifications", notificationRoutes);
-app.use("/weather", weatherRoutes);
+// app.use("/auth", authRouter);
+// app.use("/email", verfiyEmail);
+// app.use("/field", fieldRoutes);
+// app.use("/disease", predictDisease);
+// app.use("/crops", cropRoutes);
+// app.use("/soil-data", soilDataRoutes);
+// app.use("/predict", predictRoutes);
+// app.use("/yield", predictYieldRoutes);
+// app.use("/farmer", farmerRoutes);
+// app.use("/farmer/analytics", farmerAnalyticsRoutes);
+// app.use("/admin", adminRoutes);
+// app.use("/admin/analytics", adminAnalyticsRoutes);
+// app.use("/admin/management", adminManagementController);
+// app.use("/notifications", notificationRoutes);
+// app.use("/weather", weatherRoutes);
 
 
 
 app.listen(PORT, () => {
     console.log(`Server is running on ${PORT} ... `);
-    startNotificationJob();
+    // startNotificationJob();
 });
 
 export default app;
