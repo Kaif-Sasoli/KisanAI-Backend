@@ -27,11 +27,11 @@ import weatherRoutes from './routes/weather.routes.js'
 const app = express();
 
 // Middlewares
-app.use(helmet());
+// app.use(helmet());
 app.use(express.json());
 app.use(cookieParser())
 app.use(express.urlencoded({ extended: true }));
-// app.use(cors(corsOptions));
+app.use(cors(corsOptions));
 
 // Test
 app.get("/", (req, res) => {
@@ -85,7 +85,7 @@ app.use("/weather", weatherRoutes);
 
 app.listen(PORT, () => {
     console.log(`Server is running on ${PORT} ... `);
-    // startNotificationJob();
+    startNotificationJob();
 });
 
 export default app;
