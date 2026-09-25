@@ -4,6 +4,7 @@ import { JWT_SECRET } from '../config/env.config.js'
 import jwt from "jsonwebtoken";
 import { CustomJwtPayload } from "../types/jwt.js";
 import { ACCESS_TOKEN } from "../config/env.config.js";
+import "../types/request.type.js";
 
 // Authentication Middleware
 export const authenticate = async (req: Request, res: Response, next: NextFunction) => {

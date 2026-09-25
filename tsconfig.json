@@ -51,6 +51,10 @@
     "ignoreDeprecations": "6.0",
     "outDir": "dist"
   },
+  "typeRoots": [
+    "./node_module/@types",
+    "./src/types"
+  ],
   "include": [
     "src/**/*.ts",
     "src/**/*.d.ts",
