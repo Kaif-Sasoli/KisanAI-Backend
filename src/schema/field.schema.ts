@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { SoilType, IrrigationType, Region } from "../../generated/prisma/enums";
+import { SoilType, IrrigationType, Region } from "../../generated/prisma/enums.js";
 
 
 // Add Field Schema

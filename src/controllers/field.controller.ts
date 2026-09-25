@@ -1,7 +1,7 @@
-import { prisma } from "../lib/prisma";
+import { prisma } from "../lib/prisma.js";
 import { Request, Response } from "express";
-import { addFieldSchema } from "../schema/field.schema";
-import { SoilType } from '../../generated/prisma/enums'
+import { addFieldSchema } from "../schema/field.schema.js";
+import { SoilType } from '../../generated/prisma/enums.js'
 
 
 export const addField = async (req: Request, res: Response) => {

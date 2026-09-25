@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import { prisma } from "../lib/prisma";
-import { predictDiseaseService } from "../services/disease.service";
-import { predictYieldService } from '../services/yield.service'
+import { prisma } from "../lib/prisma.js";
+import { predictDiseaseService } from "../services/disease.service.js";
+import { predictYieldService } from '../services/yield.service.js'
 
 
 // Predict Disease

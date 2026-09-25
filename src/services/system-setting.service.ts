@@ -1,6 +1,6 @@
 // services/system-setting.service.ts
 
-import { Prisma } from "../../generated/prisma/client";
+import { Prisma } from "../../generated/prisma/client.js";
 import { prisma } from "../lib/prisma.js";
 
 

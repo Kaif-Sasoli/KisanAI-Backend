@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { prisma } from "../lib/prisma";
-import { uploadImage, deleteImage } from "../services/cloudinary.service";
+import { prisma } from "../lib/prisma.js";
+import { uploadImage, deleteImage } from "../services/cloudinary.service.js";
 
 // Get  Farmer Account
 export const getAccount = async (req: Request, res: Response) => {

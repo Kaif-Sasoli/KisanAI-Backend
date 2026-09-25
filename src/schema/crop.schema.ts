@@ -4,7 +4,7 @@ import {
     AreaUnit,
     CropStatus,
     CropType
-} from "../../generated/prisma/enums";
+} from "../../generated/prisma/enums.js";
 
 // Add Crop
 export const addCropSchema = z

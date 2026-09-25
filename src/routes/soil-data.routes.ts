@@ -1,9 +1,9 @@
 import { Router } from "express";
 
-import { authenticate } from "../middleware/auth.middleware";
-import { validate } from "../middleware/validate.middleware";
-import { addSoilDataSchema, updateSoilDataSchema } from "../schema/soil-data.schema";
-import * as soilDataController from "../controllers/soil-data.controller";
+import { authenticate } from "../middleware/auth.middleware.js";
+import { validate } from "../middleware/validate.middleware.js";
+import { addSoilDataSchema, updateSoilDataSchema } from "../schema/soil-data.schema.js";
+import * as soilDataController from "../controllers/soil-data.controller.js";
 
 
 const router = Router();

@@ -1,8 +1,8 @@
 import { Router } from "express";
-import { authenticate } from "../middleware/auth.middleware";
-import { authorize } from "../middleware/role.middleware";
-import { UserRole } from "../../generated/prisma/enums";
-import * as farmerAnalyticsController from '../controllers/farmer-analytics.controller'
+import { authenticate } from "../middleware/auth.middleware.js";
+import { authorize } from "../middleware/role.middleware.js";
+import { UserRole } from "../../generated/prisma/enums.js";
+import * as farmerAnalyticsController from '../controllers/farmer-analytics.controller.js'
 
 
 

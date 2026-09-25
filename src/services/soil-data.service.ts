@@ -1,5 +1,5 @@
-import { prisma } from "../lib/prisma";
-import { getSoilMoistureFromIoT } from "./soil-moisture.service";
+import { prisma } from "../lib/prisma.js";
+import { getSoilMoistureFromIoT } from "./soil-moisture.service.js";
 
 
 export const updateSoilMoistureFromIoT = async (fieldId: string) => {

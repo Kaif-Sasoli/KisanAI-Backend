@@ -1,6 +1,6 @@
 import cron from "node-cron";
-import { processTestNotifications } from "../services/notification.service";
-import { processWeatherNotifications } from "../services/weather-notification.service";
+import { processTestNotifications } from "../services/notification.service.js";
+import { processWeatherNotifications } from "../services/weather-notification.service.js";
 
 export const startNotificationJob = () => {
 

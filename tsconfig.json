@@ -41,45 +41,21 @@
 //     "ignoreDeprecations": "6.0"
 //   }
 // }
-// {
-//   "compilerOptions": {
-//     "module": "ESNext",
-//     "moduleResolution": "bundler",
-//     "target": "ES2023",
-//     "strict": true,
-//     "esModuleInterop": true,
-//     "ignoreDeprecations": "6.0",
-//     "outDir": "dist"
-//   },
-//   "include": [
-//     "src/**/*.ts",
-//     "src/**/*.d.ts",
-//     "prisma/**/*.ts"
-//   ],
-//   "exclude": [
-//     "node_modules",
-//     "dist"
-//   ]
-// }
 {
   "compilerOptions": {
+    "module": "ESNext",
+    "moduleResolution": "bundler",
     "target": "ES2023",
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
     "strict": true,
     "esModuleInterop": true,
-    "skipLibCheck": true,
-    "outDir": "dist",
-    "types": [
-      "node"
-    ],
-    "sourceMap": true,
-    "ignoreDeprecations": "6.0"
+    "ignoreDeprecations": "6.0",
+    "outDir": "dist"
   },
   "include": [
     "src/**/*.ts",
     "src/**/*.d.ts",
-    "prisma/**/*.ts"
+    "prisma/**/*.ts",
+    "generated/**/*.ts"
   ],
   "exclude": [
     "node_modules",

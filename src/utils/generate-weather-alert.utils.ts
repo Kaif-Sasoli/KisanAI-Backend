@@ -1,6 +1,6 @@
-import { WeatherAlert, WeatherCondition } from "../types/notification.types";
-import { getSetting } from "../services/system-setting.service";
-import { WeatherAlertThresholds } from "../types/notification.types";
+import { WeatherAlert, WeatherCondition } from "../types/notification.types.js";
+import { getSetting } from "../services/system-setting.service.js";
+import { WeatherAlertThresholds } from "../types/notification.types.js";
 
 export const generateWeatherAlerts = async (
     weather: WeatherCondition

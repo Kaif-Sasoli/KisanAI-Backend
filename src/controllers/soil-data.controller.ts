@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import { prisma } from "../lib/prisma";
-import { findFarmerField } from "../utils/field.utils";
-import { updateSoilMoistureFromIoT } from "../services/soil-data.service";
+import { prisma } from "../lib/prisma.js";
+import { findFarmerField } from "../utils/field.utils.js";
+import { updateSoilMoistureFromIoT } from "../services/soil-data.service.js";
 
 // Soil Data
 export const addSoilData = async (req: Request, res: Response) => {

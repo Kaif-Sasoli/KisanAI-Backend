@@ -1,9 +1,9 @@
 import { Router } from "express";
-import { authenticate } from "../middleware/auth.middleware";
-import { authorize } from "../middleware/role.middleware";
-import { UserRole } from "../../generated/prisma/enums";
+import { authenticate } from "../middleware/auth.middleware.js";
+import { authorize } from "../middleware/role.middleware.js";
+import { UserRole } from "../../generated/prisma/enums.js";
 import upload from '../middleware/upload.middleware.js'
-import * as adminController from "../controllers/admin.controller"
+import * as adminController from "../controllers/admin.controller.js"
 
 const router = Router();
 

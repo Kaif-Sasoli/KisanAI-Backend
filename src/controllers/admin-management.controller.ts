@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { prisma } from "../lib/prisma";
-import { Prisma } from "../../generated/prisma/client";
+import { prisma } from "../lib/prisma.js";
+import { Prisma } from "../../generated/prisma/client.js";
 
 
 // Get All Farmers
@@ -326,7 +326,7 @@ export const upsertSystemSetting = async (req: Request, res: Response) => {
 };
 
 // Add or Update MULTIPLE Settings
-export const upsertSystemSettings = async (req: Request,res: Response) => {
+export const upsertSystemSettings = async (req: Request, res: Response) => {
     try {
         const { settings } = req.body;
 

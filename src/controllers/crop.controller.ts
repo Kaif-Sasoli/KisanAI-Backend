@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { prisma } from "../lib/prisma";
-import { AreaUnit, CropStatus } from "../../generated/prisma/enums";
+import { prisma } from "../lib/prisma.js";
+import { AreaUnit, CropStatus } from "../../generated/prisma/enums.js";
 import { findFarmerField } from "../utils/field.utils.js";
 
 

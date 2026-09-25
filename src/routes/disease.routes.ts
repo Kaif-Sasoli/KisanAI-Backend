@@ -1,5 +1,5 @@
 import { Router } from "express";
-import * as diseaseController from "../controllers/predict-disease.controller";
+import * as diseaseController from "../controllers/predict-disease.controller.js";
 import { authenticate } from "../middleware/auth.middleware.js";
 import upload from "../middleware/upload.middleware.js";
 import { validate } from "../middleware/validate.middleware.js";
