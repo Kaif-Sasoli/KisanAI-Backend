@@ -85,7 +85,7 @@ app.use("/weather", weatherRoutes);
 
 app.listen(PORT, () => {
     console.log(`Server is running on ${PORT} ... `);
-    startNotificationJob();
+    // startNotificationJob();
 });
 
 export default app;
